@@ -1,8 +1,9 @@
+import Navbar from "./layouts/Navbar";
+
 function App() {
   return (
     <div>
-      <h1>hello world</h1>
-     
+      <Navbar />
     </div>
   );
 }
