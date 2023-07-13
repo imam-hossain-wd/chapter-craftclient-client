@@ -1,11 +1,11 @@
-import Footer from "./layouts/Footer";
-import Navbar from "./layouts/Navbar";
+import { RouterProvider } from "react-router-dom";
+import router from "./routes/routes";
+
 
 function App() {
   return (
-    <div>
-      <Navbar />
-      <Footer />
+    <div className='max-w-[1440px] mx-auto'>
+      <RouterProvider router={router}></RouterProvider>
     </div>
   );
 }

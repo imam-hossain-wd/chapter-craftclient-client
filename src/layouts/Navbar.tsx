@@ -1,4 +1,13 @@
+import React from "react";
+import { Link } from "react-router-dom";
+
 const Navbar = () => {
+
+  const menuItems = <React.Fragment>
+    <li><Link to="/home">Home</Link></li>
+    <li><Link to="/all-books">All Books</Link></li>
+    <li><Link to="/checkout">Checkout</Link></li>
+  </React.Fragment>
   return (
     <section>
       <div className="navbar bg-base-100">
@@ -24,16 +33,7 @@ const Navbar = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
-              <li>
-                <a>Home</a>
-              </li>
-              <li>
-                <a>All Books</a>
-              </li>
-              <li>
-                {' '}
-                <a>Checkout</a>
-              </li>
+             { menuItems }
             </ul>
           </div>
           <div>
@@ -42,16 +42,7 @@ const Navbar = () => {
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
-            <li>
-              <a>Home</a>
-            </li>
-            <li>
-              <a>All Books</a>
-            </li>
-            <li>
-              {' '}
-              <a>Checkout</a>
-            </li>
+            {menuItems }
           </ul>
         </div>
         <div className="navbar-end">
