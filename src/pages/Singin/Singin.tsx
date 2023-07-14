@@ -8,11 +8,12 @@ const Singin = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const singinHandler = (data: any) => {
+  const singinHandler = (data) => {
     console.log(data);
   };
   return (
-    <div className="w-2/5 mx-auto border-4 border-yellow-500 p-5 rounded">
+    <section className='flex justify-center'>
+<div className='w-[450px] border-2 border-orange-400 p-10 mb-10 rounded-md'>
       <form onSubmit={handleSubmit(singinHandler)}>
         <div>
           <h1 className="text-center text-3xl font-bold ">WELCOME TO</h1>
@@ -22,18 +23,28 @@ const Singin = () => {
         </div>
         <br />
         <input
-          {...register('email')}
+           {...register('email', {
+            required: 'Email is required'
+          })}
           type="email"
           placeholder="Email"
           className="input input-bordered w-full mb-4"
-        />{' '}
+        />
+        {errors.email && <span className='text-red-700'>{errors.email.message}</span>}
         <br />
         <input
-          {...register('password')}
+          // {...register('password')}
+          {...register('password', {
+            required: 'Password is required',
+            minLength: {
+              value: 8,
+              message: 'Password must be at least 8 characters',
+            },
+          })}
           type="password"
           placeholder="password"
           className="input input-bordered w-full mb-4"
-        />{' '}
+        />{errors.password && <span className='text-red-700'>{errors?.password.message}</span>}
         <br />
         <p className="font-bold mb-2">
           <Link to="/">Forget password ?</Link>{' '}
@@ -68,6 +79,8 @@ const Singin = () => {
         </p>
       </form>
     </div>
+    </section>
+    
   );
 };
 
