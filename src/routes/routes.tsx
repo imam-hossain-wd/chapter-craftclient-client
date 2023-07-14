@@ -1,4 +1,5 @@
 import MainLayout from "@/layouts/MainLayout";
+import Singin from "@/pages/Singin/Singin";
 import AllBooks from "@/pages/allBooks/AllBooks";
 import Checkout from "@/pages/checkout/Checkout";
 import Home from "@/pages/home/Home";
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
             {
                 path:'/checkout',
                 element:<Checkout />
+            },
+            {
+                path:'/singin',
+                element:<Singin/>
             },
         ]
     }

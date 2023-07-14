@@ -2,6 +2,7 @@
 
 const Footer = () => {
     return (
+ 
         <div>
             <footer className="footer items-center p-4 bg-neutral text-neutral-content">
   <div className="items-center grid-flow-col">

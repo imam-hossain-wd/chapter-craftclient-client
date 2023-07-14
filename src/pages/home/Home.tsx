@@ -1,8 +1,9 @@
 
 const Home = () => {
+
     return (
         <div>
-            this is hom ejs
+          this is home js
         </div>
     );
 };
