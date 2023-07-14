@@ -2,10 +2,6 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { FaGoogle } from 'react-icons/fa';
 
-interface ISingin {
-  email:string,
-  password:string
-}
 const Singin = () => {
   const {
     register,
