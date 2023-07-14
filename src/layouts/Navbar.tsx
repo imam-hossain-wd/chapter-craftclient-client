@@ -1,7 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {FaUser} from 'react-icons/fa';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/firebase/firebase.config';
+import { setUser } from '@/redux/feacture/user/userslice';
 const Navbar = () => {
+
+  const { user } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
+    console.log('Logout');
+    signOut(auth).then(() => {
+      dispatch(setUser(null));
+    });
+  };
+
   const menuItems = (
     <React.Fragment>
       <li>
@@ -19,7 +34,7 @@ const Navbar = () => {
       <li>
         <Link to="/singup">Sing up</Link>
       </li>
-      <button className="btn btn-xs mt-2">Sing out</button>
+      <button onClick={handleLogout} className="btn btn-xs mt-2">Sing out</button>
 
       <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-circle btn-ghost btn-xs text-info">

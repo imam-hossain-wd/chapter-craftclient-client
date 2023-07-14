@@ -1,16 +1,35 @@
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaGoogle } from 'react-icons/fa';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { singinUser } from '@/redux/feacture/user/userslice';
+import { useEffect } from 'react';
 
 const Singin = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const singinHandler = (data) => {
-    console.log(data);
+
+  interface LoginFormInputs {
+    email: string;
+    password: string;
+  }
+const { register, handleSubmit, formState: { errors }} = useForm<LoginFormInputs>();
+
+const { user, isLoading } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const singinHandler = (data:LoginFormInputs) => {
+    const {email, password} = data;
+    dispatch(singinUser({ email,password }));
+    navigate('/')
   };
+
+  useEffect(() => {
+    if (user.email && !isLoading) {
+      navigate('/');
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user.email, isLoading]);
+
   return (
     <section className='flex justify-center'>
 <div className='w-[450px] border-2 border-orange-400 p-10 mb-10 rounded-md'>
