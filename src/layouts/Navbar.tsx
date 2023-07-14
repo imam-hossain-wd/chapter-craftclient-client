@@ -17,7 +17,7 @@ const Navbar = () => {
         <Link to="/singin">Sing in</Link>
       </li>
       <li>
-        <Link to="/singout">Sing up</Link>
+        <Link to="/singup">Sing up</Link>
       </li>
       <button className="btn btn-xs mt-2">Sing out</button>
 
