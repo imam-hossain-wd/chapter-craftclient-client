@@ -1,4 +1,4 @@
-import {  createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 
 interface IUserState {
@@ -18,6 +18,7 @@ interface IUserState {
     isError: false,
     error: null,
   };
+
 
 const userSlice = createSlice({
     name: 'user ',
