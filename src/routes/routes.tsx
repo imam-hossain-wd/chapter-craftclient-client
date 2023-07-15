@@ -1,4 +1,5 @@
 import MainLayout from "@/layouts/MainLayout";
+import Bookdetails from "@/pages/Bookdetails/Bookdetails";
 import Singin from "@/pages/Singin/Singin";
 import AllBooks from "@/pages/allBooks/AllBooks";
 import Checkout from "@/pages/checkout/Checkout";
@@ -36,6 +37,14 @@ const router = createBrowserRouter([
                 path:'/singup',
                 element:<Singup/>
             },
+            {
+                path:'/book/:id',
+                loader: ({params}) => {
+                  return fetch(`https://book-catalog-sigma.vercel.app/api/v1/books/${params.id}`)
+                },
+                element: <Bookdetails />
+              
+              }
         ]
     }
 ])
