@@ -1,9 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from '@/redux/feacture/user/userslice'
+import userReducer from './feacture/user/userslice';
+import{ api } from './api/apiSlice';
+
 const store = configureStore({
   reducer: {
     user: userReducer,
+    [api.reducerPath]: api.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+  getDefaultMiddleware().concat(api.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
