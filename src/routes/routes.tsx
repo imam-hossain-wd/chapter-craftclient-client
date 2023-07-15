@@ -1,6 +1,7 @@
 import MainLayout from "@/layouts/MainLayout";
 import Bookdetails from "@/pages/Bookdetails/Bookdetails";
 import Singin from "@/pages/Singin/Singin";
+import AddBook from "@/pages/addBook/AddBook";
 import AllBooks from "@/pages/allBooks/AllBooks";
 import Checkout from "@/pages/checkout/Checkout";
 import EditBook from "@/pages/editBook/EditBook";
@@ -53,7 +54,12 @@ const router = createBrowserRouter([
                 },
                 element: <EditBook />
               
-              }
+              },
+            {
+                path:'/add-book',
+                element: <AddBook />
+              
+              },
         ]
     }
 ])
