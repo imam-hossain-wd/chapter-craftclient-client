@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 const BookCart: React.FC<BookCartProps> = ({book}) => {
 
     const { title, author, genre, publication_date } = book;
+
     return (
     <div className="card w-80 h-[450px] shadow-xl bg-gray-900 text-white">
   <figure className="px-10 pt-10">
