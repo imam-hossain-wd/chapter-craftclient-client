@@ -1,13 +1,32 @@
-import { IBook } from "@/types/booktypes";
-import { useLoaderData } from "react-router-dom";
+import { useEditSingleBooksQuery } from "@/redux/api/apiSlice";
+import {  useParams } from "react-router-dom";
 
 const EditBook = () => {
-    const response = useLoaderData();
-  const { data } = response as { data: IBook };
-  console.log(data);
+const {id} = useParams();
 
-  const { title, genre, author, publication_date,image_url } = data as IBook;
-  console.log('Book details:', title, genre, author, publication_date);
+const {data:book, isLoading, error} = useEditSingleBooksQuery(id)
+
+  console.log('yess', book);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center">
+        <span className="loading loading-ring loading-lg"></span>
+      </div>
+    );
+  }
+
+  if (error) {
+    console.log(error);
+  }
+
+  if (!book) {
+    return <p>Book not found</p>;
+  }
+
+  const { title, genre, author, publication_date,image_url } = book.data;
+  console.log('Book details:', title, genre, author, publication_date); 
+
 const handleBookUpdate = (event: React.FormEvent<HTMLFormElement>)=> {
     event.preventDefault()
     console.log('btn click');

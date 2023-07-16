@@ -1,12 +1,14 @@
 import { useGetBooksQuery } from '@/redux/api/apiSlice';
 import { IBook } from '@/types/booktypes';
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link,  useParams } from 'react-router-dom';
 
 const Bookdetails = () => {
-  const response = useLoaderData();
-  const { data } = response as { data: IBook };
-  const { isLoading } = useGetBooksQuery(undefined);
+const {id} = useParams()
+  const { data, isLoading, error } = useGetBooksQuery(id);
 
+  if(error){
+    console.log(error);
+  }
   if (isLoading) {
     return (
       <div className="flex justify-center items-center">
@@ -19,8 +21,8 @@ const Bookdetails = () => {
     return <div>Loading...</div>;
   }
 
-  const { title, genre, author, publication_date } = data as IBook;
-  console.log('Book details:', title, genre, author, publication_date);
+  const { _id,title, genre, author, publication_date } = data as IBook;
+  console.log('Book details:', _id);
 
   return (
     <div>
@@ -40,7 +42,7 @@ const Bookdetails = () => {
           <h2 className="text-sm">{publication_date}</h2>
         </div>
         <div>
-        <button className="btn bg-red-400 border-0 rounded-full btn-sm "><Link to={`/edit-book/${data?._id}`}>Edit</Link></button>
+        <button className="btn bg-red-400 border-0 rounded-full btn-sm "><Link to={`/edit-book/${id}`}> Edit</Link></button>
       <button className="btn bg-red-400 border-0 rounded-full btn-sm ">Delete</button>
         </div>
       </div>

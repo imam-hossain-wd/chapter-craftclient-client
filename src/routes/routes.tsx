@@ -41,17 +41,11 @@ const router = createBrowserRouter([
             },
             {
                 path:'/book/:id',
-                loader: ({params}) => {
-                  return fetch(`https://book-catalog-sigma.vercel.app/api/v1/books/${params.id}`)
-                },
                 element: <Bookdetails />
               
               },
             {
                 path:'/edit-book/:id',
-                loader: ({params}) => {
-                  return fetch(`https://book-catalog-sigma.vercel.app/api/v1/books/${params.id}`)
-                },
                 element: <EditBook />
               
               },
