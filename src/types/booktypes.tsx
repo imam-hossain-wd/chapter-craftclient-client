@@ -21,3 +21,11 @@ export interface BookdetailsCardProps {
 export interface BookCartProps {
   book: IBook;
 }
+
+export interface FormData {
+  title: string;
+  author: string;
+  image: FileList;
+  genre: string;
+  public_date: string;
+}

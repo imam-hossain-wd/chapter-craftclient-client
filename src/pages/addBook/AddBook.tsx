@@ -1,10 +1,72 @@
-import { useForm } from 'react-hook-form';
+import { useAddBookMutation } from '@/redux/api/apiSlice';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
+
 
 const AddBook = () => {
   const {register,handleSubmit,reset,formState: { errors }} = useForm();
 
-  const addBookHandler = (data)=> {
-    console.log(data);
+  const imageHostKey ='ecf9899ca96e2e39087f5e9f348d4c18';
+  console.log(imageHostKey);
+  const [addBook, { isError, isSuccess}] = useAddBookMutation()
+
+// if(isLoading){
+//   return (
+//     <IsLoading />
+//   )
+// }
+if(isSuccess){
+    toast.success("Book Added successfully")
+    console.log(isSuccess);
+}
+if(isError){
+  toast.error("Book Added Failed")
+  console.log(isError);
+}
+interface FormData {
+  title: string;
+  author: string;
+  image: FileList;
+  genre: string;
+  public_date: string;
+}
+
+  const addBookHandler :SubmitHandler<FormData> = (data)=> {
+
+    const title = data.title;
+    const author = data.author;
+    const image = data.image[0];
+    const genre = data.genre;
+    const publication_date = data.public_date;
+
+    const formData = new FormData();
+    formData.append("image", image);
+
+    const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imgData) => {
+        if (imgData.success) {
+          console.log(imgData.data.url);
+          const image_url = imgData.data.url;
+          const book = {
+            title,
+            author,
+           genre,
+             image_url, 
+           publication_date, 
+          };
+          addBook(book)
+          reset()
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      })
+      ;
 
   }
   return (
@@ -84,58 +146,7 @@ const AddBook = () => {
             )}
           </label>
 
-          <label htmlFor="">
-            Rating <br />
-            <select
-              className="select select-bordered mt-2 w-full"
-              {...register("rating", {
-                required: true,
-              })}
-            >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-            {errors.rating && (
-              <span className="text-red-700">Rating is required</span>
-            )}
-          </label>
-
-          <label htmlFor="">
-            Comment <br />
-            <input
-              {...register('comment', {
-                required: true,
-              })}
-              type="text"
-              placeholder="Comment"
-              className="input input-bordered mt-2 w-full"
-            />{' '}
-            {errors.comment && (
-              <span className="text-red-700">comment is required</span>
-            )}
-          </label>
         </div>
-
-        <label htmlFor="" className="w-full">
-          Description <br />
-          <div className="form-control ">
-            <textarea
-              {...register('description', {
-                required: true,
-              })}
-              className="textarea textarea-bordered h-24 w-4/5 mt-2 "
-              placeholder="write something about product"
-            ></textarea>
-          </div>
-          {errors.productName && (
-            <span className="text-red-700">
-              Product description is required
-            </span>
-          )}
-        </label>
 
         <div className="w-full">
           <input

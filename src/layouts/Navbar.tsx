@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { useAppDispatch} from '@/redux/hooks';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/firebase/firebase.config';
 import { setUser } from '@/redux/feacture/user/userslice';
 const Navbar = () => {
 
-  const { user } = useAppSelector((state) => state.user);
+  // const { user } = useAppSelector((state) => state.user);
+  // console.log(user);
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {

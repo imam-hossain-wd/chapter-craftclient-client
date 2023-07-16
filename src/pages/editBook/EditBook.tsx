@@ -1,26 +1,31 @@
+import IsLoading from "@/components/IsLoading";
 import { useEditSingleBooksQuery } from "@/redux/api/apiSlice";
+import { toast } from "react-hot-toast";
 import {  useParams } from "react-router-dom";
 
 const EditBook = () => {
 const {id} = useParams();
 
-const {data:book, isLoading, error} = useEditSingleBooksQuery(id)
+const {data:book, isLoading, error, isSuccess} = useEditSingleBooksQuery(id)
 
   console.log('yess', book);
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center">
-        <span className="loading loading-ring loading-lg"></span>
-      </div>
+      <IsLoading />
     );
+  }
+  if(isSuccess){
+    toast.success("success")
   }
 
   if (error) {
     console.log(error);
+    toast.error("Edit page load fail")
   }
 
   if (!book) {
+    toast.success("Book is not found")
     return <p>Book not found</p>;
   }
 
