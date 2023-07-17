@@ -29,7 +29,7 @@ export const api = createApi({
         method: 'DELETE',
       }),
       invalidatesTags: ['books'],
-    })
+    }),
     
   })
 });

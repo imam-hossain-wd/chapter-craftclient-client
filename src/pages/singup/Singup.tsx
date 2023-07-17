@@ -21,7 +21,7 @@ const Singup = () => {
   const singUpHandler = (data: SignupFormInputs) => {
     const { email, password } = data;
     dispatch(createUser({ email, password }));
-    toast.success('success');
+    toast.success('sing up successfully');
   };
 
   return (

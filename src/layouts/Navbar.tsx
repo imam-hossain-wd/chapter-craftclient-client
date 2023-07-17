@@ -1,19 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch} from '@/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/firebase/firebase.config';
 import { setUser } from '@/redux/feacture/user/userslice';
+import { toast } from 'react-hot-toast';
 const Navbar = () => {
-
-  // const { user } = useAppSelector((state) => state.user);
-  // console.log(user);
+  const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {
     console.log('Logout');
     signOut(auth).then(() => {
       dispatch(setUser(null));
+      toast.success("user singout successfully")
     });
   };
 
@@ -31,15 +31,22 @@ const Navbar = () => {
       <li>
         <Link to="/checkout">Checkout</Link>
       </li>
-      <li>
-        <Link to="/singin">Sing in</Link>
-      </li>
-      <li>
-        <Link to="/singup">Sing up</Link>
-      </li>
-      <li> <p onClick={handleLogout} >
-         Sing out</p></li>
 
+      {user?.email ? (
+        <li>
+          {' '}
+          <p onClick={handleLogout}>Sing out</p>
+        </li>
+      ) : (
+        <div className="flex flex-col lg:flex-row ">
+          <li>
+            <Link to="/singin">Sing in</Link>
+          </li>
+          <li>
+            <Link to="/singup">Sing up</Link>
+          </li>
+        </div>
+      )}
     </React.Fragment>
   );
   return (
@@ -68,7 +75,6 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               {menuItems}
-              <button>Sing out</button>
             </ul>
           </div>
           <div>
@@ -81,7 +87,6 @@ const Navbar = () => {
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{menuItems}</ul>
-
         </div>
       </div>
     </section>

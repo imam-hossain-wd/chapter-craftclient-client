@@ -68,7 +68,23 @@ const userSlice = createSlice({
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         state.error = action.error.message!;
       })
-  }
+      .addCase(singinUser.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+        state.error = null;
+      })
+      .addCase(singinUser.fulfilled, (state, action) => {
+        state.user.email = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(singinUser.rejected, (state, action) => {
+        state.user.email = null;
+        state.isLoading = false;
+        state.isError = true;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        state.error = action.error.message!;
+      });
+  },
 });
 
 export const { setUser, setLoading } = userSlice.actions;

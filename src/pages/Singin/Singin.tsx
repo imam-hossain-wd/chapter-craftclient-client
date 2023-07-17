@@ -4,6 +4,7 @@ import { FaGoogle } from 'react-icons/fa';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { singinUser } from '@/redux/feacture/user/userslice';
 import { useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 
 const Singin = () => {
 
@@ -20,6 +21,7 @@ const { user, isLoading } = useAppSelector((state) => state.user);
   const singinHandler = (data:LoginFormInputs) => {
     const {email, password} = data;
     dispatch(singinUser({ email,password }));
+    toast.success("user sing in successfully")
     navigate('/')
   };
 
