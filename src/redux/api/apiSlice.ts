@@ -26,6 +26,14 @@ export const api = createApi({
       }),
       invalidatesTags:['books']
     }),
+    updateBook: builder.mutation({
+      query: ({id, ...data}) => ({
+        url: `books/${id}`,
+        method: 'PATCH',
+        body: data
+      }),
+      invalidatesTags: ['books'],
+    }),
     deleteBook: builder.mutation({
       query: (id) => ({
         url: `books/${id}`,
@@ -37,4 +45,4 @@ export const api = createApi({
   })
 });
 
-export const {useGetBooksQuery, useSingleBooksQuery, useEditSingleBooksQuery, useAddBookMutation, useDeleteBookMutation, useCheckoutBookQuery} = api;
+export const {useGetBooksQuery, useSingleBooksQuery, useEditSingleBooksQuery, useAddBookMutation, useDeleteBookMutation, useCheckoutBookQuery, useUpdateBookMutation} = api;

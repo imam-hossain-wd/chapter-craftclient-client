@@ -1,5 +1,7 @@
+import IsLoading from '@/components/IsLoading';
 import useTitle from '@/hooks/useTitle';
 import { useAddBookMutation } from '@/redux/api/apiSlice';
+import { useAppSelector } from '@/redux/hooks';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 
@@ -7,16 +9,17 @@ import { toast } from 'react-hot-toast';
 const AddBook = () => {
   useTitle('Add Book');
   const {register,handleSubmit,reset,formState: { errors }} = useForm();
+  const { user } = useAppSelector((state) => state.user);
 
   const imageHostKey ='ecf9899ca96e2e39087f5e9f348d4c18';
   console.log(imageHostKey);
-  const [addBook, { isError, isSuccess}] = useAddBookMutation()
+  const [addBook, { isError, isSuccess,isLoading}] = useAddBookMutation()
 
-// if(isLoading){
-//   return (
-//     <IsLoading />
-//   )
-// }
+if(isLoading){
+  return (
+    <IsLoading />
+  )
+}
 if(isSuccess){
     toast.success("Book Added successfully")
     console.log(isSuccess);
@@ -60,6 +63,7 @@ interface FormData {
            genre,
              image_url, 
            publication_date, 
+           user_email:user?.email
           };
           addBook(book)
           reset()
@@ -159,7 +163,6 @@ interface FormData {
 
         </div>
 
-        
       </form>
     </div>
   );

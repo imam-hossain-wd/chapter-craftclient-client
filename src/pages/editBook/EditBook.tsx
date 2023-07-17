@@ -1,18 +1,20 @@
 import IsLoading from "@/components/IsLoading";
 import useTitle from "@/hooks/useTitle";
-import { useEditSingleBooksQuery } from "@/redux/api/apiSlice";
-import { useForm } from "react-hook-form";
+import { useEditSingleBooksQuery, useUpdateBookMutation } from "@/redux/api/apiSlice";
+import { useAppSelector } from "@/redux/hooks";
+import {  useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import {  useParams } from "react-router-dom";
 
 const EditBook = () => {
   useTitle('Edit Book');
 const {id} = useParams();
+const { user } = useAppSelector((state) => state.user);
 
-const {data:book, isLoading, error, isSuccess} = useEditSingleBooksQuery(id)
+const {data:book, isLoading} = useEditSingleBooksQuery(id)
 const {register,handleSubmit,reset,formState: { errors }} = useForm();
-
-  console.log('yess', book);
+const [updateBook, { isError, isSuccess}] = useUpdateBookMutation()
+const imageHostKey ='ecf9899ca96e2e39087f5e9f348d4c18';
 
   if (isLoading) {
     return (
@@ -23,8 +25,8 @@ const {register,handleSubmit,reset,formState: { errors }} = useForm();
     toast.success("success")
   }
 
-  if (error) {
-    console.log(error);
+  if (isError) {
+    console.log(isError);
     toast.error("Edit page load fail")
   }
 
@@ -34,19 +36,66 @@ const {register,handleSubmit,reset,formState: { errors }} = useForm();
   }
 
   const { title, genre, author, publication_date,image_url } = book.data;
-  console.log('Book details:', title, genre, author, publication_date); 
 
-const addBookHandler = (event: React.FormEvent<HTMLFormElement>)=> {
-    console.log('btn click');
+interface IUpdateBook {
+    title: string;
+    author: string;
+    genre: string;
+    image: FileList;
+    user_email:string | null;
+    publication_date: string;
 }
+
+  const updateBookHandler = (data:IUpdateBook)=> {
+
+    const title = data.title;
+    const author = data.author;
+    const image = data.image[0];
+    const genre = data.genre;
+    const publication_date = data.publication_date;
+
+    console.log('update',title,author, image, genre,publication_date);
+
+    const formData = new FormData();
+    formData.append("image", image);
+
+    const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imgData) => {
+        if (imgData.success) {
+          console.log(imgData.data.url);
+          const image_url = imgData.data.url;
+          const updatedBook = {
+            title,
+            author,
+           genre,
+             image_url, 
+           publication_date, 
+           user_email:user?.email
+          };
+          updateBook({id,updatedBook})
+          console.log(id);
+          reset()
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      })
+      ;
+
+  }
     return (
         <section>
             <p className="">this is edit book page</p> <br />
             <div className="flex justify-center">
             
-            <form className="flex justify-center " onSubmit={handleSubmit(addBookHandler)}>
+            <form className="flex justify-center " onSubmit={handleSubmit(updateBookHandler)}>
         <div className="flex flex-col w-96 ">
-          <p className='text-3xl fond-bold text-center text-orange-500' >Edit Book</p>
+          <p className='text-3xl font-bold text-center text-orange-500' >Edit Book</p>
           <label htmlFor="">
           Title <br />
             <input
@@ -97,7 +146,7 @@ const addBookHandler = (event: React.FormEvent<HTMLFormElement>)=> {
           <label htmlFor="">
           Publication Date <br />
             <input
-              {...register('public_date', {
+              {...register('publication_date', {
                 required: true,
               })}
               type="date"
@@ -111,13 +160,13 @@ const addBookHandler = (event: React.FormEvent<HTMLFormElement>)=> {
           </label>
 
           <label htmlFor="">
-            Book Photo Url <br />
+            Book Photo <br />
             <input
               {...register('image', {
                 required: true,
               })}
-              defaultValue={image_url}
-              type="url"
+              type="file"
+              // defaultValue={image_url}
               className="file-input file-input-bordered mt-2 w-full"
             />{' '}
             {errors.image && (
