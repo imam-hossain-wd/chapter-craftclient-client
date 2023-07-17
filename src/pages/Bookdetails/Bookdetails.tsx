@@ -2,8 +2,9 @@ import useTitle from '@/hooks/useTitle';
 import { useGetBooksQuery } from '@/redux/api/apiSlice';
 import { IBook } from '@/types/booktypes';
 import { Link,  useParams } from 'react-router-dom';
-
+import Model from '@/components/model';
 const Bookdetails = () => {
+
   useTitle('Book Details');
 const {id} = useParams()
   const { data, isLoading, error } = useGetBooksQuery(id);
@@ -45,8 +46,10 @@ const {id} = useParams()
         </div>
         <div>
         <button className="btn bg-red-400 border-0 rounded-full btn-sm "><Link to={`/edit-book/${id}`}> Edit</Link></button>
-      <button className="btn bg-red-400 border-0 rounded-full btn-sm ">Delete</button>
+      <button className="btn bg-red-400 border-0 rounded-full btn-sm" onClick={()=>window.my_modal_5.showModal()}>Delete Book</button>
+      <Model />
         </div>
+
       </div>
     </div>
   );
