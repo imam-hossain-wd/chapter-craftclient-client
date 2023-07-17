@@ -71,8 +71,9 @@ interface FormData {
   }
   return (
     <div>
-      <form className="" onSubmit={handleSubmit(addBookHandler)}>
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-3">
+      <form className="flex justify-center " onSubmit={handleSubmit(addBookHandler)}>
+        <div className="flex flex-col w-96 ">
+          <p className='text-3xl fond-bold text-center text-orange-500' >Add New Book</p>
           <label htmlFor="">
           Title <br />
             <input
@@ -146,15 +147,17 @@ interface FormData {
             )}
           </label>
 
-        </div>
-
-        <div className="w-full">
+          <div className="w-full">
           <input
             type="submit"
-            value="Add Product"
-            className="btn btn-error m-2 w-72 mx-auto"
+            value="Add Book"
+            className="btn btn-success m-2 w-full mx-auto"
           />
         </div>
+
+        </div>
+
+        
       </form>
     </div>
   );

@@ -35,17 +35,6 @@ const Singup = () => {
             </h3>
           </div>
           <br />
-          {/* <div>
-        <input
-           {...register('name', {
-            required: 'Email is name'
-          })}
-          type="text"
-          placeholder="Enter your name"
-          className="input input-bordered w-full mb-4"
-        />
-        {errors.name && <span className='text-red-700'>{errors.name.message}</span>}
-        </div> */}
           <div>
             <input
               {...register('email', {
