@@ -1,9 +1,11 @@
+import useTitle from '@/hooks/useTitle';
 import { useAddBookMutation } from '@/redux/api/apiSlice';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 
 
 const AddBook = () => {
+  useTitle('Add Book');
   const {register,handleSubmit,reset,formState: { errors }} = useForm();
 
   const imageHostKey ='ecf9899ca96e2e39087f5e9f348d4c18';

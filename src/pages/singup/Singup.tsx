@@ -4,8 +4,10 @@ import { FaGoogle } from 'react-icons/fa';
 import { useAppDispatch } from '@/redux/hooks';
 import { createUser } from '@/redux/feacture/user/userslice';
 import { toast } from 'react-hot-toast';
+import useTitle from '@/hooks/useTitle';
 
 const Singup = () => {
+  useTitle('Singup');
   const {
     register,
     handleSubmit,

@@ -5,8 +5,10 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { singinUser } from '@/redux/feacture/user/userslice';
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
+import useTitle from '@/hooks/useTitle';
 
 const Singin = () => {
+  useTitle('SingIn');
 
   interface LoginFormInputs {
     email: string;

@@ -18,7 +18,9 @@ const BookCart: React.FC<BookCartProps> = ({book}) => {
     <div className="card-actions">
 
       <button className="btn bg-red-400 border-0 rounded-full btn-sm "><Link to={`/book/${book?._id}`}>See details</Link></button>
-      <button className="btn bg-red-400 border-0 rounded-full btn-sm ">Checkout</button>
+      <button className="btn bg-red-400 border-0 rounded-full btn-sm ">
+      <Link to={`/checkout/${book?._id}`}>Checkout</Link>
+      </button>
     </div>
   </div>
 </div>

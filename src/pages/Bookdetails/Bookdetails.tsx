@@ -1,8 +1,10 @@
+import useTitle from '@/hooks/useTitle';
 import { useGetBooksQuery } from '@/redux/api/apiSlice';
 import { IBook } from '@/types/booktypes';
 import { Link,  useParams } from 'react-router-dom';
 
 const Bookdetails = () => {
+  useTitle('Book Details');
 const {id} = useParams()
   const { data, isLoading, error } = useGetBooksQuery(id);
 

@@ -28,10 +28,6 @@ const router = createBrowserRouter([
                 element:<AllBooks />
             },
             {
-                path:'/checkout',
-                element:<Checkout />
-            },
-            {
                 path:'/singin',
                 element:<Singin/>
             },
@@ -49,6 +45,10 @@ const router = createBrowserRouter([
                 element: <EditBook />
               
               },
+              {
+                path:'/checkout/:id',
+                element:<Checkout />
+            },
             {
                 path:'/add-book',
                 element: <AddBook />

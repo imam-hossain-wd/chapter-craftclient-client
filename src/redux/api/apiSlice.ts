@@ -15,6 +15,9 @@ export const api = createApi({
     editSingleBooks : builder.query({
         query: (id)=> `/books/${id}`,
     }),
+    checkoutBook : builder.query({
+        query: (id)=> `/books/${id}`,
+    }),
     addBook : builder.mutation({
       query:(data)=> ({
         url:`/books/create-book`,
@@ -34,4 +37,4 @@ export const api = createApi({
   })
 });
 
-export const {useGetBooksQuery, useSingleBooksQuery, useEditSingleBooksQuery, useAddBookMutation, useDeleteBookMutation} = api;
+export const {useGetBooksQuery, useSingleBooksQuery, useEditSingleBooksQuery, useAddBookMutation, useDeleteBookMutation, useCheckoutBookQuery} = api;
