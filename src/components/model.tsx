@@ -1,25 +1,28 @@
 import { useDeleteBookMutation } from "@/redux/api/apiSlice";
+import { useAppSelector } from "@/redux/hooks";
 import { toast } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 
 const Model = () => {
-
+  
   const navigate = useNavigate()
-  const [deleteBook, { isError, isSuccess }] = useDeleteBookMutation();
+  const [deleteBook] = useDeleteBookMutation();
+  const { user } = useAppSelector((state) => state.user);
   const {id} = useParams();
 
-
-  if(isError){
-    console.log(isError);
-  }
-  if(isSuccess){
-    console.log(isSuccess);
-  }
   const bookDeleteHandler = async (id:string | undefined)=> {
-    deleteBook(id)
-    toast.success("book deleted successfully")
-    navigate('/')
-  }
+    const email = user?.email;
+    console.log("email is", email);
+    deleteBook({id, email})
+    .unwrap()
+      .then((response) => {
+        navigate('/')
+        toast.success(response.data)
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+}
 
   return (
 

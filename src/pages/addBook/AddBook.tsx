@@ -10,24 +10,10 @@ const AddBook = () => {
   useTitle('Add Book');
   const {register,handleSubmit,reset,formState: { errors }} = useForm();
   const { user } = useAppSelector((state) => state.user);
-
   const imageHostKey ='ecf9899ca96e2e39087f5e9f348d4c18';
-  console.log(imageHostKey);
-  const [addBook, { isError, isSuccess,isLoading}] = useAddBookMutation()
+  const [addBook] = useAddBookMutation()
+  
 
-if(isLoading){
-  return (
-    <IsLoading />
-  )
-}
-if(isSuccess){
-    toast.success("Book Added successfully")
-    console.log(isSuccess);
-}
-if(isError){
-  toast.error("Book Added Failed")
-  console.log(isError);
-}
 interface FormData {
   title: string;
   author: string;
@@ -66,11 +52,13 @@ interface FormData {
            user_email:user?.email
           };
           addBook(book)
+          toast.success("Book is Added")
           reset()
         }
       })
       .catch(error => {
         console.log(error);
+        toast.error(error?.message)
       });
 
   }
