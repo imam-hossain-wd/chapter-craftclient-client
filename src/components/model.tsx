@@ -1,19 +1,26 @@
 import { useDeleteBookMutation } from "@/redux/api/apiSlice";
-import { useParams } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Model = () => {
+
+  const navigate = useNavigate()
   const [deleteBook, { isError, isSuccess }] = useDeleteBookMutation();
   const {id} = useParams();
 
-  const bookDeleteHandler = async (id:string | undefined)=> {
-    deleteBook(id)
-  }
+
   if(isError){
     console.log(isError);
   }
   if(isSuccess){
     console.log(isSuccess);
   }
+  const bookDeleteHandler = async (id:string | undefined)=> {
+    deleteBook(id)
+    toast.success("book deleted successfully")
+    navigate('/')
+  }
+
   return (
 
         <dialog

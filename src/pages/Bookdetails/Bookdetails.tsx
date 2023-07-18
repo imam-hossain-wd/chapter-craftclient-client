@@ -74,7 +74,7 @@ const Bookdetails = () => {
             <p className="text-md font-bold">{publication_date}</p>
             <p className="text-md font-bold">$500</p>
             <div className="mt-2 w-72 h-96">
-              {reviews.map((review, index) => (
+              {reviews && reviews.map((review, index) => (
                 <div key={index}>
                   <p>Rating: {review.rating}</p>
                   <p>Comment: {review.comment}</p>

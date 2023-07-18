@@ -18,7 +18,7 @@ export const api = createApi({
         providesTags:['books']
     }),
     editSingleBooks : builder.query({
-        query: (id)=> `/books/book/${id}`,
+        query: (id)=> `books/book/${id}`,
         providesTags:['books']
     }),
     checkoutBook : builder.query({
@@ -43,7 +43,7 @@ export const api = createApi({
     }),
     updateBook: builder.mutation({
       query: ({id, ...data}) => ({
-        url: `books/${id}`,
+        url: `/books/${id}`,
         method: 'PATCH',
         body: data
       }),
@@ -51,13 +51,10 @@ export const api = createApi({
     }),
     deleteBook: builder.mutation({
       query: (id) => ({
-        url: `books/${id}`,
-        method: 'PATCH',
+        url: `/books/delete/${id}`,
+        method: 'DELETE',
       }),
-    //   invalidatesTags: ['books'],
-    onQueryStarted(id, { dispatch, queryFulfilled }) {
-      dispatch(api.util.invalidateTags(['books']));
-    },
+      invalidatesTags: ['books'],
     }),
 
     
