@@ -9,20 +9,35 @@ export const api = createApi({
         query: ()=> "/books",
         providesTags:['books']
     }),
+    getLimitedBooks : builder.query({
+        query: ()=> "/books/?limit=10",
+        providesTags:['books']
+    }),
     SingleBooks : builder.query({
-        query: (id)=> `/books/${id}`,
+        query: (id)=> `/books/book/${id}`,
+        providesTags:['books']
     }),
     editSingleBooks : builder.query({
-        query: (id)=> `/books/${id}`,
+        query: (id)=> `/books/book/${id}`,
+        providesTags:['books']
     }),
     checkoutBook : builder.query({
-        query: (id)=> `/books/${id}`,
+        query: (id)=> `/books/book/${id}`,
+        providesTags:['books']
     }),
     addBook : builder.mutation({
       query:(data)=> ({
         url:`/books/create-book`,
         method: 'POST',
         body: data
+      }),
+      invalidatesTags:['books']
+    }),
+    postComment : builder.mutation({
+      query:( { id, rating, comment })=> ({
+        url:`/books/reviews/${id}`,
+        method: 'POST',
+        body: {rating, comment}
       }),
       invalidatesTags:['books']
     }),
@@ -37,12 +52,16 @@ export const api = createApi({
     deleteBook: builder.mutation({
       query: (id) => ({
         url: `books/${id}`,
-        method: 'DELETE',
+        method: 'PATCH',
       }),
-      invalidatesTags: ['books'],
+    //   invalidatesTags: ['books'],
+    onQueryStarted(id, { dispatch, queryFulfilled }) {
+      dispatch(api.util.invalidateTags(['books']));
+    },
     }),
+
     
   })
 });
 
-export const {useGetBooksQuery, useSingleBooksQuery, useEditSingleBooksQuery, useAddBookMutation, useDeleteBookMutation, useCheckoutBookQuery, useUpdateBookMutation} = api;
+export const {useGetBooksQuery, useSingleBooksQuery, useEditSingleBooksQuery, useAddBookMutation, useDeleteBookMutation, useCheckoutBookQuery,useGetLimitedBooksQuery, useUpdateBookMutation, usePostCommentMutation} = api;

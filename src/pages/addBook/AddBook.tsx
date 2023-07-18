@@ -71,8 +71,7 @@ interface FormData {
       })
       .catch(error => {
         console.log(error);
-      })
-      ;
+      });
 
   }
   return (

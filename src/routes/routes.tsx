@@ -8,6 +8,8 @@ import EditBook from "@/pages/editBook/EditBook";
 import Home from "@/pages/home/Home";
 import Singup from '@/pages/singup/Singup'
 import { createBrowserRouter } from "react-router-dom";
+import PrivateRoutes from "./PrivateRoutes";
+
 
 
 const router = createBrowserRouter([
@@ -51,7 +53,7 @@ const router = createBrowserRouter([
             },
             {
                 path:'/add-book',
-                element: <AddBook />
+                element: <PrivateRoutes> <AddBook /></PrivateRoutes>
               
               },
         ]

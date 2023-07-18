@@ -1,14 +1,11 @@
 import { BookCartProps } from "@/types/booktypes";
 import { Link } from "react-router-dom";
-const BookCart: React.FC<BookCartProps> = ({book}) => {
-
-
-    const { title, author, genre, publication_date } = book;
-
+const BookCart: React.FC<BookCartProps>  = ({book}) => {
+    const { title, author, genre, publication_date,image_url } = book;
     return (
-    <div className="card w-80 h-[450px] shadow-xl bg-gray-900 text-white">
+        <div className="card w-80 h-[450px] shadow-xl bg-gray-900 text-white">
   <figure className="px-10 pt-10">
-    <img src="https://eloquentjavascript.net/img/cover.jpg" alt="Shoes" className="rounded-lg w-60 h-48" />
+    <img src={image_url} alt="Shoes" className="rounded-lg w-60 h-48" />
   </figure>
   <div className="card-body items-center text-center">
   <h2 className="">{title}</h2>

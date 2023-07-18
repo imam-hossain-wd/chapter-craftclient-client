@@ -1,10 +1,10 @@
-import { useGetBooksQuery } from "@/redux/api/apiSlice";
+import {  useGetLimitedBooksQuery } from "@/redux/api/apiSlice";
 import BookCart from "./BookCart";
 import { IBook } from "@/types/booktypes";
 import IsLoading from "@/components/IsLoading";
 
 const Books = () => {
-  const { data, isLoading, error } = useGetBooksQuery(undefined);
+  const { data, isLoading, error } = useGetLimitedBooksQuery(undefined);
   console.log(error);
 
   if (isLoading) {

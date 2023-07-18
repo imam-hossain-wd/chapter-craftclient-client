@@ -35,7 +35,7 @@ const imageHostKey ='ecf9899ca96e2e39087f5e9f348d4c18';
     return <p>Book not found</p>;
   }
 
-  const { title, genre, author, publication_date,image_url } = book.data;
+  const { title, genre, author, publication_date} = book?.data;
 
 interface IUpdateBook {
     title: string;
@@ -54,7 +54,7 @@ interface IUpdateBook {
     const genre = data.genre;
     const publication_date = data.publication_date;
 
-    console.log('update',title,author, image, genre,publication_date);
+    // console.log('update',title,author, image, genre,publication_date);
 
     const formData = new FormData();
     formData.append("image", image);
@@ -166,7 +166,6 @@ interface IUpdateBook {
                 required: true,
               })}
               type="file"
-              // defaultValue={image_url}
               className="file-input file-input-bordered mt-2 w-full"
             />{' '}
             {errors.image && (
