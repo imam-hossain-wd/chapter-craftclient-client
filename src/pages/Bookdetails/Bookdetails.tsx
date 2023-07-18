@@ -7,12 +7,15 @@ import { IBook } from '@/types/booktypes';
 import { Link, useParams } from 'react-router-dom';
 import Model from '@/components/model';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useAppSelector } from '@/redux/hooks';
+import { toast } from 'react-hot-toast';
 
 
 const Bookdetails = () => {
   useTitle('Book Details');
   const { id } = useParams();
   const { data, isLoading, error } = useSingleBooksQuery(id);
+  const { user } = useAppSelector((state) => state.user);
   const [postComment] = usePostCommentMutation();
   const {
     register,
@@ -52,8 +55,14 @@ const Bookdetails = () => {
   const commentHandler: SubmitHandler<Inputs> = (data) => {
     const comment = data.comment;
     const rating = data.rating;
-    postComment({ id, rating, comment });
-    reset();
+    if(!user.email){
+      toast.error("Only Attenticated users can comment. please log in")
+    }
+    if(user?.email){
+      postComment({ id, rating, comment });
+      reset();
+      toast.success("comment successfully")
+    }
   };
   return (
     <section>
