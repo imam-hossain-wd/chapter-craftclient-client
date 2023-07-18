@@ -2,9 +2,11 @@ import {  useGetLimitedBooksQuery } from "@/redux/api/apiSlice";
 import BookCart from "./BookCart";
 import { IBook } from "@/types/booktypes";
 import IsLoading from "@/components/IsLoading";
+import { useSelector } from "react-redux";
 
 const Books = () => {
-  const { data, isLoading, error } = useGetLimitedBooksQuery(undefined);
+  const searchTerm = useSelector((state) => state.search.searchTerm);
+  const { data, isLoading, error } = useGetLimitedBooksQuery(searchTerm);
   console.log(error);
 
   if (isLoading) {

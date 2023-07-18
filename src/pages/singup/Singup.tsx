@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaGoogle } from 'react-icons/fa';
 import { useAppDispatch } from '@/redux/hooks';
 import { createUser } from '@/redux/feacture/user/userslice';
@@ -13,7 +13,7 @@ const Singup = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<SignupFormInputs>();
-
+const navigate = useNavigate()
   interface SignupFormInputs {
     email: string;
     password: string;
@@ -23,7 +23,9 @@ const Singup = () => {
   const singUpHandler = (data: SignupFormInputs) => {
     const { email, password } = data;
     dispatch(createUser({ email, password }));
+    navigate('/singin')
     toast.success('sing up successfully');
+    
   };
 
   return (
