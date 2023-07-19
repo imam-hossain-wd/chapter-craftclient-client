@@ -73,7 +73,6 @@ const Bookdetails = () => {
   };
   return (
     <section>
-      this is book details
       <div className="w-[900px] h-[600px] mx-auto ">
         <div className="flex flex-col lg:flex-row justify-around ">
           <div>

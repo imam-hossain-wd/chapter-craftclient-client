@@ -1,3 +1,4 @@
+import IsLoading from '@/components/IsLoading';
 import useTitle from '@/hooks/useTitle';
 import { useCheckoutBookQuery } from '@/redux/api/apiSlice';
 import { IBook } from '@/types/booktypes';
@@ -13,7 +14,6 @@ const Checkout = () => {
     formState: { errors },
   } = useForm();
   const { id } = useParams();
-  console.log('use params id', id);
   const { data: bookData, isLoading, error } = useCheckoutBookQuery(id);
 
   if (error) {
@@ -21,27 +21,27 @@ const Checkout = () => {
   }
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center">
-        <span className="loading loading-ring loading-lg"></span>
-      </div>
+      <IsLoading/>
     );
   }
 
   if (!bookData) {
-    return <div>Loading...</div>;
+    return (
+      <IsLoading/>
+    );
   }
 
-  console.log(`data`, bookData.data);
-  const { _id, title, genre, author, publication_date, image_url } =
+  const {  title, genre, author, publication_date, image_url } =
     bookData.data as IBook;
 
   const checkoutHandler = async () => {
     console.log('checkout btn click...');
+    reset();
   };
 
   return (
-    <section className='flex justify-around bg-sky-300 p-10 rounded-md'>
-      <div className="bg-red-400">
+    <section className='flex flex-col lg:flex-row justify-around bg-sky-300   p-10 rounded-md'>
+      <div className="">
         {' '}
         <br />
         <p className='text-3xl font-bold text-center '>{title}</p>
@@ -54,9 +54,9 @@ const Checkout = () => {
         </div>
 		<br />
         
-        <p className='text-md font-bold'>Author : {author}</p>
-        <p className='text-md font-bold'>Genre :{genre}</p>
-        <p className='text-md font-bold'>Publication Date: {publication_date}</p>
+        <p className='text-md text-center lg:text-left font-bold'>Author : {author}</p>
+        <p className='text-md text-center lg:text-left font-bold'>Genre :{genre}</p>
+        <p className='text-md text-center lg:text-left font-bold'>Publication Date: {publication_date}</p>
       </div>
 
       <div>
@@ -64,8 +64,8 @@ const Checkout = () => {
           className="flex justify-center "
           onSubmit={handleSubmit(checkoutHandler)}
         >
-          <div className="flex flex-col w-80 ">
-            <p className="text-3xl fond-bold text-center text-orange-500">
+          <div className="flex flex-col w-96 mt-10 lg:mt-5 border-2 border-gray-600 p-5 rounded-lg">
+            <p className="text-3xl  text-center ">
               Checkout Form
             </p>
             <label htmlFor="">
@@ -76,7 +76,7 @@ const Checkout = () => {
                 })}
                 type="text"
                 placeholder="Full Name"
-                className="input input-bordered mt-2 w-full"
+                className="input input-bordered  mt-2 w-full"
               />{' '}
               {errors.full_name && (
                 <span className="text-red-700">Full Name is required</span>
@@ -120,7 +120,7 @@ const Checkout = () => {
                 })}
                 type="text"
                 placeholder="Enter your address"
-                className="input input-bordered  mt-2 w-full"
+                className="input input-bordered    mt-2 w-full"
               />{' '}
               {errors.address && (
                 <span className="text-red-700">Address is required</span>
@@ -131,7 +131,7 @@ const Checkout = () => {
               <input
                 type="submit"
                 value="Buy Book"
-                className="btn btn-success m-2 w-full mx-auto"
+                className="btn bg-green-500  border-0 m-2 w-full mx-auto"
               />
             </div>
           </div>

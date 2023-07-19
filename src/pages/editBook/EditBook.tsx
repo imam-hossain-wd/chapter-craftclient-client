@@ -54,8 +54,6 @@ interface IUpdateBook {
     const genre = data.genre;
     const publication_date = data.publication_date;
 
-    // console.log('update',title,author, image, genre,publication_date);
-
     const formData = new FormData();
     formData.append("image", image);
 
@@ -90,7 +88,6 @@ interface IUpdateBook {
   }
     return (
         <section>
-            <p className="">this is edit book page</p> <br />
             <div className="flex justify-center">
             
             <form className="flex justify-center " onSubmit={handleSubmit(updateBookHandler)}>
