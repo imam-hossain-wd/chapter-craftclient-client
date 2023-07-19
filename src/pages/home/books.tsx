@@ -1,20 +1,20 @@
-import {  useGetLimitedBooksQuery } from "@/redux/api/apiSlice";
-import BookCart from "./BookCart";
-import { IBook } from "@/types/booktypes";
-import IsLoading from "@/components/IsLoading";
-import { useSelector } from "react-redux";
+import { useGetLimitedBooksQuery } from '@/redux/api/apiSlice';
+import BookCart from './BookCart';
+import { IBook } from '@/types/booktypes';
+import IsLoading from '@/components/IsLoading';
+import { useSelector } from 'react-redux';
 
 const Books = () => {
   const searchTerm = useSelector((state) => state.search.searchTerm);
   const genre = useSelector((state) => state.search.genre);
-  // const publicationYear = useSelector((state) => state.search.publicationYear);
-  const { data, isLoading, error } = useGetLimitedBooksQuery({searchTerm,genre});
+  const { data, isLoading, error } = useGetLimitedBooksQuery({
+    searchTerm,
+    genre,
+  });
   console.log(error);
 
   if (isLoading) {
-    return (
-      <IsLoading />
-    );
+    return <IsLoading />;
   }
 
   return (

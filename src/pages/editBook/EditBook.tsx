@@ -88,11 +88,11 @@ interface IUpdateBook {
   }
     return (
         <section>
-            <div className="flex justify-center">
+            <div className="flex justify-center ">
             
-            <form className="flex justify-center " onSubmit={handleSubmit(updateBookHandler)}>
+            <form className="flex justify-center border-2 border-gray-700 p-7 rounded-lg" onSubmit={handleSubmit(updateBookHandler)}>
         <div className="flex flex-col w-96 ">
-          <p className='text-3xl font-bold text-center text-orange-500' >Edit Book</p>
+          <p className='text-3xl font-md text-center text-rose-500' >Edit Book</p>
           <label htmlFor="">
           Title <br />
             <input

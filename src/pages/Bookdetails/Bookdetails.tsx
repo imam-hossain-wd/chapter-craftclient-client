@@ -11,11 +11,8 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { toast } from 'react-hot-toast';
 import { addToBook } from '@/redux/feacture/cart/cartslice';
 
-
-
 const Bookdetails = () => {
   const dispatch = useAppDispatch();
-  const books = useAppSelector((state) => state.cart.books);
 
   useTitle('Book Details');
   const { id } = useParams();
@@ -56,7 +53,7 @@ const Bookdetails = () => {
 
   const addBooks = async (book: IBook) => {
     dispatch(addToBook(book));
-    console.log('book is ', book);
+    toast.success("Book Added wishlist")
   };
 
   const commentHandler: SubmitHandler<Inputs> = (data) => {
@@ -73,32 +70,50 @@ const Bookdetails = () => {
   };
   return (
     <section>
-      <div className="w-[900px] h-[600px] mx-auto ">
+      <div className="w-[95%] h-[600px] mx-auto ">
         <div className="flex flex-col lg:flex-row justify-around ">
-          <div>
+          <div className='w-[45%]'>
             <img
               src="https://img.freepik.com/free-photo/book-composition-with-open-book_23-2147690555.jpg"
-              className="w-[400px] h-96"
+              className="w-full h-72 rounded-lg"
               alt=""
-            />
+            /> <br/>
+
+            {/* products details */}
+
+            <div>
+            <p className="text-xl font-bold">{title}</p>
+            <p className="text-md font-medium">Author : {author}</p>
+            <p className="text-md font-medium">Genre :{genre}</p>
+            <p className="text-md font-medium">Publication Date : {publication_date}</p>
+            <p className="text-md font-medium">Price : $500</p> 
+            </div>
+            <div className='flex flex-col lg:flex-row lg:justify-between mt-5'>
+              <button className='btn bg-indigo-600 text-white hover:text-black  border-0 rounded-full btn-sm mb-2 w-40'><Link to={`/edit-book/${id}`}> Edit</Link></button>
+              <button className='btn bg-rose-600 text-white hover:text-black  border-0 rounded-full btn-sm mb-2 w-40'
+              onClick={() => window.my_modal_5.showModal()}
+              >delete</button>
+              <button className='btn bg-green-500 text-white hover:text-black border-0 rounded-full btn-sm mb-2 w-40'
+              onClick={() => addBooks(data?.data)}
+              >Add to wishlist</button>
+            </div>
+            
+          
+
+            {/* products details end */}
           </div>
-          <div className="h-500px w-[400px]">
-            <p className="text-xl text-center font-bold">{title}</p>
-            <p className="text-md font-bold">{author}</p>
-            <p className="text-md font-bold">{genre}</p>
-            <p className="text-md font-bold">{publication_date}</p>
-            <p className="text-md font-bold">$500</p>
-            <div className="mt-2 w-72 h-96">
+          <div className="h-500px w-[45%] h-[600px]">
+            <div className="mt-2 w-96 h-72">
               {reviews && reviews.map((review, index) => (
-                <div key={index}>
-                  <p>Rating: {review.rating}</p>
+                <div key={index} className='border-2 border-orange-400 p-5 rounded mb-2'>
                   <p>Comment: {review.comment}</p>
+                  <p>Rating: {review.rating}</p>
                 </div>
               ))}
             </div>
 
             <form
-              className="flex flex-col my-5"
+              className="flex flex-col mt-2 w-72 "
               onSubmit={handleSubmit(commentHandler)}
             >
               <label htmlFor="">
@@ -131,10 +146,10 @@ const Bookdetails = () => {
                 )}
               </label>
 
-              <input className="btn btn-sucess" type="submit" />
+              <input className="btn bg-indigo-600 text-white hover:text-black  border-0 " type="submit" />
             </form>
             <div className="flex flex-col justify-center">
-              <button className="btn bg-green-500 border-0 w-60 rounded-full btn-sm mb-2">
+              {/* <button className="btn bg-green-500 border-0 w-60 rounded-full btn-sm mb-2">
                 <Link to={`/edit-book/${id}`}> Edit</Link>
               </button>
               <button
@@ -148,7 +163,7 @@ const Bookdetails = () => {
                 className="btn bg-sky-500 border-0 rounded-full btn-sm mb-2 w-60"
               >
                 Add WishList
-              </button>
+              </button> */}
 
               <Model />
             </div>
