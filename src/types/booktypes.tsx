@@ -12,6 +12,7 @@ export interface IBook {
     publication_date: string;
     image_url: string;
     reviews: Review[];
+    quantity?: number
 }
 
 export interface BookdetailsCardProps {

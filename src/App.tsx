@@ -21,7 +21,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className="max-w-[1440px] mx-auto">
+    <div className="max-w-[95%] mx-auto">
       <RouterProvider router={router}></RouterProvider>
     </div>
   );

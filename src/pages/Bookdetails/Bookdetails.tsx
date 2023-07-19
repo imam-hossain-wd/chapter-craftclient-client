@@ -7,11 +7,20 @@ import { IBook } from '@/types/booktypes';
 import { Link, useParams } from 'react-router-dom';
 import Model from '@/components/model';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useAppSelector } from '@/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { toast } from 'react-hot-toast';
+import { addToBook } from '@/redux/feacture/cart/cartslice';
+
 
 
 const Bookdetails = () => {
+  const dispatch = useAppDispatch();
+  const books = useAppSelector((state) => state.cart.books);
+  console.log('wishlist cartkkk', books);
+  books.map(book => console.log(book))
+
+ 
+
   useTitle('Book Details');
   const { id } = useParams();
   const { data, isLoading, error } = useSingleBooksQuery(id);
@@ -40,16 +49,18 @@ const Bookdetails = () => {
     return <div>Loading...</div>;
   }
 
-  const { title, genre, author, publication_date, reviews } =
+  const { title, genre, author, publication_date, reviews} =
     data?.data as IBook;
+
 
   type Inputs = {
     comment: string;
     rating: number;
   };
 
-  const addToBook = async (book: IBook) => {
-    dispatchEvent(book());
+  const addBooks = async (book: IBook) => {
+    dispatch(addToBook(book));
+    console.log('book is ', book);
   };
 
   const commentHandler: SubmitHandler<Inputs> = (data) => {
@@ -138,7 +149,7 @@ const Bookdetails = () => {
                 Delete Book
               </button>
               <button
-                onClick={() => addToBook(data?.data)}
+                onClick={() => addBooks(data?.data)}
                 className="btn bg-sky-500 border-0 rounded-full btn-sm mb-2 w-60"
               >
                 Add WishList
