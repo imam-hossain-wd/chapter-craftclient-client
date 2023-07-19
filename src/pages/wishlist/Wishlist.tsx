@@ -1,10 +1,16 @@
-import { useAppSelector } from '@/redux/hooks';
+import { removeFromBook } from '@/redux/feacture/cart/cartslice';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { BsTrash } from 'react-icons/bs';
 
 
 const Wishlist = () => {
   const { books } = useAppSelector((state) => state.cart);
-  console.log(books);
+  const dispatch = useAppDispatch()
+
+  const handleRemove = (bookId:string) => {
+    dispatch(removeFromBook(bookId))
+ 
+  };
   return (
     <section>
       <div className="flex justify-center">
@@ -33,9 +39,10 @@ const Wishlist = () => {
                       <td>{book.title}</td>
                       <td>
                      
-                        <button
+                      <button
                           type="button"
-                          className=" h-9 w-16 border-0 font-bold "
+                          className="h-9 w-16 border-0 font-bold"
+                          onClick={() => handleRemove(book._id)}
                         >
                           <BsTrash className="w-5 h-5 hover:text-red-500 mx-auto" />
                         </button>

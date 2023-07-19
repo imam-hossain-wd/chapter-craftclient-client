@@ -28,12 +28,17 @@ const cartSlice = createSlice({
   initialState: initialCartState,
   reducers: {
     addToBook: (state, action: PayloadAction<IBook>) => {
-      state.books.push({ ...action.payload });
+      state.books = [...state.books, { ...action.payload }];
+      saveCartToLocalStorage(state);
+    },
+    removeFromBook: (state, action: PayloadAction<string>) => {
+      const bookId = action.payload;
+      state.books = state.books.filter((book) => book._id !== bookId);
       saveCartToLocalStorage(state);
     },
   },
 });
 
-export const { addToBook } = cartSlice.actions;
+export const { addToBook, removeFromBook } = cartSlice.actions;
 
 export default cartSlice.reducer;

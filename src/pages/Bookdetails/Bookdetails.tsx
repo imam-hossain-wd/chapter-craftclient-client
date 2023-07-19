@@ -16,10 +16,6 @@ import { addToBook } from '@/redux/feacture/cart/cartslice';
 const Bookdetails = () => {
   const dispatch = useAppDispatch();
   const books = useAppSelector((state) => state.cart.books);
-  console.log('wishlist cartkkk', books);
-  books.map(book => console.log(book))
-
- 
 
   useTitle('Book Details');
   const { id } = useParams();
