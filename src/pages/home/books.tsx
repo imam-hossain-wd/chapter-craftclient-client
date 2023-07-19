@@ -6,7 +6,9 @@ import { useSelector } from "react-redux";
 
 const Books = () => {
   const searchTerm = useSelector((state) => state.search.searchTerm);
-  const { data, isLoading, error } = useGetLimitedBooksQuery(searchTerm);
+  const genre = useSelector((state) => state.search.genre);
+  // const publicationYear = useSelector((state) => state.search.publicationYear);
+  const { data, isLoading, error } = useGetLimitedBooksQuery({searchTerm,genre});
   console.log(error);
 
   if (isLoading) {

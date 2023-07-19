@@ -9,10 +9,11 @@ import SearchFiltering from '../home/SearchFiltering';
 
 const AllBooks = () => {
   const searchTerm = useSelector((state) => state.search.searchTerm);
+  const genre = useSelector((state) => state.search.genre);
+  const publicationYear = useSelector((state) => state.search.publicationYear);
   useTitle('All Books');
 
-  console.log(searchTerm,'search term is');
-  const { data, isLoading } = useGetBooksQuery(searchTerm);
+  const { data, isLoading } = useGetBooksQuery({searchTerm, publicationYear,genre});
 
   if(isLoading){
     return (

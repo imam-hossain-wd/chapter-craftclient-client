@@ -6,11 +6,11 @@ export const api = createApi({
   tagTypes: ['books'],
   endpoints: (builder) => ({
     getBooks : builder.query({
-        query: (searchTerm)=> `books/?searchTerm=${searchTerm}`,
+        query: ({searchTerm,genre})=> `/books/?searchTerm=${searchTerm}&genre=${genre}`,
         providesTags:['books']
     }),
     getLimitedBooks : builder.query({
-        query: (searchTerm)=> `/books/?limit=10&searchTerm=${searchTerm}`,
+        query: ({searchTerm,genre})=> `/books/?searchTerm=${searchTerm}&genre=${genre}`,
         providesTags:['books']
     }),
     SingleBooks : builder.query({

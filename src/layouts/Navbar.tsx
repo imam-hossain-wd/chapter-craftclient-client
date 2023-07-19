@@ -28,6 +28,9 @@ const Navbar = () => {
       <li>
         <Link to="/add-book">Add Book</Link>
       </li>
+      <li>
+        <Link to="/wish-list">Wish List</Link>
+      </li>
       {user?.email ? (
         <li>
           {' '}

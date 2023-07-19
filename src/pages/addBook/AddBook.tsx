@@ -28,7 +28,7 @@ interface FormData {
     const author = data.author;
     const image = data.image[0];
     const genre = data.genre;
-    const publication_date = data.public_date;
+    const publication_date = parseInt(data.public_date);
 
     const formData = new FormData();
     formData.append("image", image);
