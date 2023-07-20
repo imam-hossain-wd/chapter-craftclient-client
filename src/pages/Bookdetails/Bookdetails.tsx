@@ -70,17 +70,15 @@ const Bookdetails = () => {
   };
   return (
     <section>
-      <div className="w-[95%] h-[600px] mx-auto ">
+      <div className="w-[95%] mx-auto ">
         <div className="flex flex-col lg:flex-row justify-around ">
+
           <div className='w-[45%]'>
             <img
               src="https://img.freepik.com/free-photo/book-composition-with-open-book_23-2147690555.jpg"
               className="w-full h-72 rounded-lg"
               alt=""
             /> <br/>
-
-            {/* products details */}
-
             <div>
             <p className="text-xl font-bold">{title}</p>
             <p className="text-md font-medium">Author : {author}</p>
@@ -97,40 +95,28 @@ const Bookdetails = () => {
               onClick={() => addBooks(data?.data)}
               >Add to wishlist</button>
             </div>
-            
-          
-
-            {/* products details end */}
           </div>
-          <div className="h-500px w-[45%] h-[600px]">
-            <div className="mt-2 w-96 h-72">
-              {reviews && reviews.map((review, index) => (
-                <div key={index} className='border-2 border-orange-400 p-5 rounded mb-2'>
-                  <p>Comment: {review.comment}</p>
-                  <p>Rating: {review.rating}</p>
-                </div>
-              ))}
-            </div>
-
-            <form
-              className="flex flex-col mt-2 w-72 "
+          
+          <div className="h-500px w-[50%] ">
+          <form
+              className="flex flex-col w-96 mx-auto border-2 border-gray-700 px-10 py-5 mt-5 lg:mt-1 rounded "
               onSubmit={handleSubmit(commentHandler)}
             >
               <label htmlFor="">
-                Comment <br />
+                <p className='text-sm mb-1'>Comment</p>
                 <textarea
                   placeholder="Comment"
                   {...register('comment', { required: true })}
-                  className="textarea textarea-bordered textarea-lg w-full max-w-xs mb-2"
+                  className="textarea textarea-bordered textarea-lg w-full h-20 max-w-xs mb-1"
                 ></textarea>
                 {errors.comment && (
                   <span className="text-red-700">Comment is required</span>
                 )}
               </label>
-              <label htmlFor="">
-                Rating <br />
+              <label className='w-48' htmlFor="">
+                <p className='text-sm'>Rating</p>
                 <select
-                  className="select select-bordered mt-2 w-full"
+                  className="select select-bordered mt-2 w-full select-sm mb-2"
                   {...register('rating', {
                     required: true,
                   })}
@@ -146,25 +132,19 @@ const Bookdetails = () => {
                 )}
               </label>
 
-              <input className="btn bg-indigo-600 text-white hover:text-black  border-0 " type="submit" />
+              <input className="btn bg-indigo-600 w-80 text-white hover:text-black  border-0 " type="submit" />
             </form>
-            <div className="flex flex-col justify-center">
-              {/* <button className="btn bg-green-500 border-0 w-60 rounded-full btn-sm mb-2">
-                <Link to={`/edit-book/${id}`}> Edit</Link>
-              </button>
-              <button
-                className="btn bg-red-500 border-0 rounded-full btn-sm mb-2 w-60"
-                onClick={() => window.my_modal_5.showModal()}
-              >
-                Delete Book
-              </button>
-              <button
-                onClick={() => addBooks(data?.data)}
-                className="btn bg-sky-500 border-0 rounded-full btn-sm mb-2 w-60"
-              >
-                Add WishList
-              </button> */}
 
+            <h1 className='text-lg mt-2 text-center text-rose-500'>Book Reviews</h1>
+            <div className="mt-2 w-full">
+              {reviews && reviews.map((review, index) => (
+                <div key={index} className='border-2 border-gray-400 p-5 rounded mb-2'>
+                  <p>Comment: {review.comment}</p>
+                  <p>Rating: {review.rating}</p>
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-col justify-center">
               <Model />
             </div>
           </div>
