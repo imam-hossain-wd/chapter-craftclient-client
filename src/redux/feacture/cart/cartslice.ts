@@ -1,10 +1,16 @@
 
 import { IBook } from "@/types/booktypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { toast} from "react-hot-toast";
+import { toast } from "react-hot-toast";
+
+type ReadingStatus = "Current Reading" | "Plan To Read" | "Finish Reading";
+
+interface ICartBook extends IBook {
+  readingStatus: ReadingStatus;
+}
 
 interface ICart {
-  books: IBook[];
+  books: ICartBook[];
 }
 
 const initialState: ICart = {
@@ -34,9 +40,10 @@ const cartSlice = createSlice({
       const isBookAlreadyAdded = state.books.some((book) => book._id === bookToAdd._id);
 
       if (!isBookAlreadyAdded) {
-        state.books = [...state.books, { ...bookToAdd }];
+        const newBook: ICartBook = { ...bookToAdd, readingStatus: "Plan To Read" };
+        state.books = [...state.books, newBook];
         saveCartToLocalStorage(state);
-        toast.success("Book Added wishlist")
+        toast.success("Book Added to wishlist");
       } else {
         toast.error("You already added the book to your wishlist!");
       }
@@ -46,10 +53,18 @@ const cartSlice = createSlice({
       state.books = state.books.filter((book) => book._id !== bookId);
       saveCartToLocalStorage(state);
     },
+    updateReadingStatus: (state, action: PayloadAction<{ bookId: string; status: ReadingStatus }>) => {
+      const { bookId, status } = action.payload;
+      const bookIndex = state.books.findIndex((book) => book._id === bookId);
+
+      if (bookIndex !== -1) {
+        state.books[bookIndex].readingStatus = status;
+        saveCartToLocalStorage(state);
+      }
+    },
   },
 });
 
-export const { addToBook, removeFromBook } = cartSlice.actions;
+export const { addToBook, removeFromBook, updateReadingStatus } = cartSlice.actions;
 
 export default cartSlice.reducer;
-
