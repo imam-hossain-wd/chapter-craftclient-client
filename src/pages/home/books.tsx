@@ -18,9 +18,13 @@ const Books = () => {
   }
 
   return (
+
+    // {data.slice(0, 10).map((item) => (
+    //   <div key={item.id}>{/* Render your data here */}</div>
+    // ))}
     <div className="w-[1200px] mx-auto">
-      <div className="grid mt-8 gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {data?.data?.map((book: IBook) => (
+      <div className="grid mt-8 gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-5">
+        {data?.data?.slice(0, 10).map((book: IBook) => (
           <BookCart key={book._id} book={book} />
         ))}
       </div>

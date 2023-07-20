@@ -53,7 +53,7 @@ const Bookdetails = () => {
 
   const addBooks = async (book: IBook) => {
     dispatch(addToBook(book));
-    toast.success("Book Added wishlist")
+    
   };
 
   const commentHandler: SubmitHandler<Inputs> = (data) => {

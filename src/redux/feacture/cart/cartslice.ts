@@ -1,5 +1,7 @@
+
 import { IBook } from "@/types/booktypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { toast} from "react-hot-toast";
 
 interface ICart {
   books: IBook[];
@@ -28,8 +30,16 @@ const cartSlice = createSlice({
   initialState: initialCartState,
   reducers: {
     addToBook: (state, action: PayloadAction<IBook>) => {
-      state.books = [...state.books, { ...action.payload }];
-      saveCartToLocalStorage(state);
+      const bookToAdd = action.payload;
+      const isBookAlreadyAdded = state.books.some((book) => book._id === bookToAdd._id);
+
+      if (!isBookAlreadyAdded) {
+        state.books = [...state.books, { ...bookToAdd }];
+        saveCartToLocalStorage(state);
+        toast.success("Book Added wishlist")
+      } else {
+        toast.error("You already added the book to your wishlist!");
+      }
     },
     removeFromBook: (state, action: PayloadAction<string>) => {
       const bookId = action.payload;
@@ -42,3 +52,4 @@ const cartSlice = createSlice({
 export const { addToBook, removeFromBook } = cartSlice.actions;
 
 export default cartSlice.reducer;
+
