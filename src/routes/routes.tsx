@@ -10,6 +10,7 @@ import Singup from '@/pages/singup/Singup'
 import { createBrowserRouter } from "react-router-dom";
 import PrivateRoutes from "./PrivateRoutes";
 import Wishlist from "@/pages/wishlist/Wishlist";
+import Bookstatus from "@/pages/wishlist/Bookstatus";
 
 
 
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
             {
                 path:'/wish-list',
                 element:<Wishlist />
+            },
+            {
+                path:'/wish-list/status',
+                element:<Bookstatus />
             },
             {
                 path:'/singin',

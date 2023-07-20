@@ -5,6 +5,7 @@ import { signOut } from 'firebase/auth';
 import { auth } from '@/firebase/firebase.config';
 import { setUser } from '@/redux/feacture/user/userslice';
 import { toast } from 'react-hot-toast';
+
 const Navbar = () => {
   const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
@@ -13,7 +14,7 @@ const Navbar = () => {
     console.log('Logout');
     signOut(auth).then(() => {
       dispatch(setUser(null));
-      toast.success("user singout successfully")
+      toast.success('user singout successfully');
     });
   };
 
@@ -28,12 +29,21 @@ const Navbar = () => {
       <li>
         <Link to="/add-book">Add Book</Link>
       </li>
-      <li>
+      <li className="relative group">
         <Link to="/wish-list">Wish List</Link>
+        {user?.email && (
+          <ul className="dropdown-content hidden group-hover:block ml-24 lg:mt-8 lg:-ml-6 w-32 absolute z-10">
+            <li>
+              <Link to="/wish-list">Book List</Link>
+            </li>
+            <li>
+              <Link to="/wish-list/status">Book Status</Link>
+            </li>
+          </ul>
+        )}
       </li>
       {user?.email ? (
         <li>
-          {' '}
           <p onClick={handleLogout}>Sing out</p>
         </li>
       ) : (
@@ -46,9 +56,9 @@ const Navbar = () => {
           </li>
         </div>
       )}
-     
     </React.Fragment>
   );
+
   return (
     <section>
       <div className="navbar bg-base-100">
@@ -62,17 +72,12 @@ const Navbar = () => {
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
               </svg>
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-36"
             >
               {menuItems}
             </ul>
