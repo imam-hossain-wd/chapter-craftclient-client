@@ -2,9 +2,8 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaGoogle } from 'react-icons/fa';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { singinUser } from '@/redux/feacture/user/userslice';
+import { signInWithGoogle, singinUser } from '@/redux/feacture/user/userslice';
 import { useEffect } from 'react';
-import { toast } from 'react-hot-toast';
 import useTitle from '@/hooks/useTitle';
 
 const Singin = () => {
@@ -23,8 +22,12 @@ const { user, isLoading } = useAppSelector((state) => state.user);
   const singinHandler = (data:LoginFormInputs) => {
     const {email, password} = data;
     dispatch(singinUser({ email,password }));
-    toast.success("user sing in successfully")
     navigate('/')
+  };
+
+  const handleGoogleLogin = () => {
+    dispatch(signInWithGoogle());
+
   };
 
   useEffect(() => {
@@ -56,7 +59,6 @@ const { user, isLoading } = useAppSelector((state) => state.user);
         {errors.email && <span className='text-red-700'>{errors.email.message}</span>}
         <br />
         <input
-          // {...register('password')}
           {...register('password', {
             required: 'Password is required',
             minLength: {
@@ -67,23 +69,21 @@ const { user, isLoading } = useAppSelector((state) => state.user);
           type="password"
           placeholder="password"
           className="input input-bordered w-full mb-4"
-        />{errors.password && <span className='text-red-700'>{errors?.password.message}</span>}
+        />{errors.password && <span className='text-red-700 mb-2'>{errors?.password.message}</span>}
         <br />
-        <p className="font-bold mb-2">
-          <Link to="/">Forget password ?</Link>{' '}
-        </p>
         <input
           type="submit"
           className="w-full rounded-full btn btn-outline btn-primary"
           value="Sing in"
         />
+        </form>
          <div className="flex  items-center m-4">
           <hr className="w-20 m-2 text-black" />
           <p className="ml-3 mr-3">or Sing in with</p>
           <hr className="w-20 m-2" />
         </div>
         <div className="w-full flex justify-center">
-          <button className="btn btn-outline btn-secondary w-full rounded-full">
+          <button onClick={handleGoogleLogin} className="btn btn-outline btn-secondary w-full rounded-full">
             {' '}
             <p className="mr-2">
               <FaGoogle />
@@ -100,7 +100,7 @@ const { user, isLoading } = useAppSelector((state) => state.user);
             Sing up
           </Link>{' '}
         </p>
-      </form>
+
     </div>
     </section>
     

@@ -2,16 +2,13 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const api = createApi({
   reducerPath: 'api',
-  baseQuery: fetchBaseQuery({ baseUrl:'http://localhost:5000/api/v1/'}),
+  baseQuery: fetchBaseQuery({ baseUrl:'https://book-catalog-sigma.vercel.app/api/v1/'}),
   tagTypes: ['books'],
   endpoints: (builder) => ({
     getBooks : builder.query({
-        query: ({searchTerm,genre})=> `/books/?searchTerm=${searchTerm}&genre=${genre}`,
+      query: ({ searchTerm, genre, publicationYear }) => `/books/?searchTerm=${searchTerm}&genre=${genre}&publicationYear=${publicationYear}`,
         providesTags:['books']
-    }),
-    getLimitedBooks : builder.query({
-        query: ({searchTerm,genre})=> `/books/?searchTerm=${searchTerm}&genre=${genre}`,
-        providesTags:['books']
+
     }),
     SingleBooks : builder.query({
         query: (id)=> `/books/book/${id}`,
@@ -60,4 +57,5 @@ export const api = createApi({
   })
 });
 
-export const {useGetBooksQuery, useSingleBooksQuery, useEditSingleBooksQuery, useAddBookMutation, useDeleteBookMutation, useCheckoutBookQuery,useGetLimitedBooksQuery, useUpdateBookMutation, usePostCommentMutation} = api;
+
+export const {useGetBooksQuery, useSingleBooksQuery, useEditSingleBooksQuery, useAddBookMutation, useDeleteBookMutation, useCheckoutBookQuery, useUpdateBookMutation, usePostCommentMutation} = api;

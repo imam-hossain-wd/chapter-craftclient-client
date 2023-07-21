@@ -2,8 +2,8 @@
 import { IBook } from "@/types/booktypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toast } from "react-hot-toast";
-
 type ReadingStatus = "Current Reading" | "Plan To Read" | "Finish Reading";
+
 
 interface ICartBook extends IBook {
   readingStatus: ReadingStatus;
@@ -48,6 +48,8 @@ const cartSlice = createSlice({
         toast.error("You already added the book to your wishlist!");
       }
     },
+
+
     removeFromBook: (state, action: PayloadAction<string>) => {
       const bookId = action.payload;
       state.books = state.books.filter((book) => book._id !== bookId);

@@ -2,8 +2,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaGoogle } from 'react-icons/fa';
 import { useAppDispatch } from '@/redux/hooks';
-import { createUser } from '@/redux/feacture/user/userslice';
-import { toast } from 'react-hot-toast';
+import { createUser, signInWithGoogle } from '@/redux/feacture/user/userslice';
 import useTitle from '@/hooks/useTitle';
 
 const Singup = () => {
@@ -24,8 +23,9 @@ const navigate = useNavigate()
     const { email, password } = data;
     dispatch(createUser({ email, password }));
     navigate('/singin')
-    toast.success('sing up successfully');
-    
+  };
+  const handleGoogleLogin = () => {
+    dispatch(signInWithGoogle());
   };
 
   return (
@@ -74,13 +74,14 @@ const navigate = useNavigate()
             className="w-full rounded-full btn btn-outline btn-primary"
             value="Sing Up"
           />
+           </form>
           <div className="flex  items-center m-4">
             <hr className="w-20 m-2 text-black" />
             <p className="ml-3 mr-3">or Sing in with</p>
             <hr className="w-20 m-2" />
           </div>
           <div className="w-full flex justify-center">
-            <button className="btn btn-outline btn-secondary w-full rounded-full">
+            <button onClick={handleGoogleLogin} className="btn btn-outline btn-secondary w-full rounded-full">
               {' '}
               <p className="mr-2">
                 <FaGoogle />
@@ -97,7 +98,7 @@ const navigate = useNavigate()
               Sing in
             </Link>{' '}
           </p>
-        </form>
+       
       </div>
     </section>
   );

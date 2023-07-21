@@ -10,6 +10,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { toast } from 'react-hot-toast';
 import { addToBook } from '@/redux/feacture/cart/cartslice';
+import '@/custom.d.ts';
+import { Review } from '@/types/booktypes';
 
 const Bookdetails = () => {
   const dispatch = useAppDispatch();
@@ -24,7 +26,8 @@ const Bookdetails = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<Review>();
+
 
   if (error) {
     console.log(error);
@@ -42,30 +45,27 @@ const Bookdetails = () => {
     return <div>Loading...</div>;
   }
 
-  const { title, genre, author, publication_date, reviews} =
-    data?.data as IBook;
+  console.log(id, data);
 
+ const { title, genre, author, publication_date, image_url } =
+    data.data || {};
 
-  type Inputs = {
-    comment: string;
-    rating: number;
-  };
-
+    const reviews: Review[] = data.data?.reviews || [];
+ 
   const addBooks = async (book: IBook) => {
     dispatch(addToBook(book));
     
   };
-
-  const commentHandler: SubmitHandler<Inputs> = (data) => {
+  const commentHandler: SubmitHandler<Review> = (data) => {
     const comment = data.comment;
     const rating = data.rating;
-    if(!user.email){
-      toast.error("Only Attenticated users can comment. please log in")
+    if (!user.email) {
+      toast.error('Only Authenticated users can comment. Please log in');
     }
-    if(user?.email){
+    if (user?.email) {
       postComment({ id, rating, comment });
       reset();
-      toast.success("comment successfully")
+      toast.success('Comment successfully');
     }
   };
   return (
@@ -74,9 +74,8 @@ const Bookdetails = () => {
         <div className="flex flex-col lg:flex-row justify-around ">
 
           <div className='w-[45%]'>
-            <img
-              src="https://img.freepik.com/free-photo/book-composition-with-open-book_23-2147690555.jpg"
-              className="w-full h-72 rounded-lg"
+            <img className='h-80 w-full rounded'
+              src={image_url}
               alt=""
             /> <br/>
             <div>
@@ -137,7 +136,7 @@ const Bookdetails = () => {
 
             <h1 className='text-lg mt-2 text-center text-rose-500'>Book Reviews</h1>
             <div className="mt-2 w-full">
-              {reviews && reviews.map((review, index) => (
+              {reviews && reviews.map((review:Review, index:number) => (
                 <div key={index} className='border-2 border-gray-400 p-5 rounded mb-2'>
                   <p>Comment: {review.comment}</p>
                   <p>Rating: {review.rating}</p>

@@ -5,12 +5,13 @@ import { IBook } from '@/types/booktypes';
 import IsLoading from '@/components/IsLoading';
 import { useSelector } from 'react-redux';
 import SearchFiltering from '../home/SearchFiltering';
+import { RootState } from '@/redux/store';
 
 
 const AllBooks = () => {
-  const searchTerm = useSelector((state) => state.search.searchTerm);
-  const genre = useSelector((state) => state.search.genre);
-  const publicationYear = useSelector((state) => state.search.publicationYear);
+  const searchTerm = useSelector((state:RootState) => state.search.searchTerm);
+  const genre = useSelector((state:RootState) => state.search.genre);
+  const publicationYear = useSelector((state:RootState) => state.search.publicationYear);
   useTitle('All Books');
 
   const { data, isLoading } = useGetBooksQuery({searchTerm, publicationYear,genre});

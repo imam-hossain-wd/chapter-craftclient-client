@@ -1,5 +1,5 @@
-interface Review {
-    _id: string;
+export interface Review {
+    _id?: string;
     rating: number;
     comment: string;
   }
@@ -12,7 +12,6 @@ export interface IBook {
     publication_date: string;
     image_url: string;
     reviews: Review[];
-    quantity?: number
 }
 
 export interface BookdetailsCardProps {
