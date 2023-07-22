@@ -45,7 +45,6 @@ const Bookdetails = () => {
     return <div>Loading...</div>;
   }
 
-  console.log(id, data);
 
  const { title, genre, author, publication_date, image_url } =
     data.data || {};
@@ -53,9 +52,14 @@ const Bookdetails = () => {
     const reviews: Review[] = data.data?.reviews || [];
  
   const addBooks = async (book: IBook) => {
-    dispatch(addToBook(book));
-    
+    if (!user.email) {
+      toast.error('Please log in');
+    }
+    if(user?.email){
+      dispatch(addToBook(book));
+    }
   };
+
   const commentHandler: SubmitHandler<Review> = (data) => {
     const comment = data.comment;
     const rating = data.rating;

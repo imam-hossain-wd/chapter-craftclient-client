@@ -9,15 +9,21 @@ const Model = () => {
   const [deleteBook] = useDeleteBookMutation();
   const { user } = useAppSelector((state) => state.user);
   const {id} = useParams();
-const successMesage = "Book deleted successfully";
-const errorMessage = "You are unauthorize ! You cannot delete book !"
+const successMessage = "Book deleted successfully";
+const errorMessage = "You are unauthorize . cannot delete book !"
+
   const bookDeleteHandler = async (id:string | undefined)=> {
     const email = user?.email;
     deleteBook({id, email})
     .unwrap()
       .then((response) => {
-        navigate('/')
-        response?.data == successMesage ? toast.success(successMesage):toast.error(errorMessage)
+        if( response?.data == successMessage){
+          toast.success(successMessage)
+          navigate('/')
+        }
+        if( response?.data === errorMessage){
+          toast.error(errorMessage)
+        }
       })
       .catch((error) => {
         console.error(error);

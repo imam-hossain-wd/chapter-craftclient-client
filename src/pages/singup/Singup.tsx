@@ -1,31 +1,33 @@
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link,  NavigateFunction, useNavigate } from 'react-router-dom';
 import { FaGoogle } from 'react-icons/fa';
 import { useAppDispatch } from '@/redux/hooks';
 import { createUser, signInWithGoogle } from '@/redux/feacture/user/userslice';
 import useTitle from '@/hooks/useTitle';
 
+interface SignupFormInputs {
+  email: string;
+  password: string;
+}
+
 const Singup = () => {
   useTitle('Singup');
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
+  const {register,handleSubmit,formState: { errors },
   } = useForm<SignupFormInputs>();
-const navigate = useNavigate()
-  interface SignupFormInputs {
-    email: string;
-    password: string;
-  }
+  const navigate: NavigateFunction = useNavigate();
+
+
+
   const dispatch = useAppDispatch();
 
   const singUpHandler = (data: SignupFormInputs) => {
     const { email, password } = data;
     dispatch(createUser({ email, password }));
-    navigate('/singin')
+ navigate('/')
   };
   const handleGoogleLogin = () => {
     dispatch(signInWithGoogle());
+ navigate('/')
   };
 
   return (

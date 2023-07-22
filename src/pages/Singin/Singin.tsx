@@ -1,32 +1,48 @@
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Location, NavigateFunction, useLocation, useNavigate } from 'react-router-dom';
 import { FaGoogle } from 'react-icons/fa';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { signInWithGoogle, singinUser } from '@/redux/feacture/user/userslice';
 import { useEffect } from 'react';
 import useTitle from '@/hooks/useTitle';
 
+interface LoginFormInputs {
+  email: string;
+  password: string;
+}
+
 const Singin = () => {
   useTitle('SingIn');
+  const { register, handleSubmit, formState: { errors }} = useForm<LoginFormInputs>();
 
-  interface LoginFormInputs {
-    email: string;
-    password: string;
-  }
-const { register, handleSubmit, formState: { errors }} = useForm<LoginFormInputs>();
+  const { user, isLoading } = useAppSelector((state) => state.user);
+  const location: Location = useLocation();
+  const navigate: NavigateFunction = useNavigate();
 
-const { user, isLoading } = useAppSelector((state) => state.user);
+  const from = location.state?.from?.pathname || '/';
+
+
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+
 
   const singinHandler = (data:LoginFormInputs) => {
     const {email, password} = data;
     dispatch(singinUser({ email,password }));
-    navigate('/')
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if (from) {
+      navigate(from, { replace: true });
+    } else {
+      navigate('/');
+    }
   };
 
   const handleGoogleLogin = () => {
     dispatch(signInWithGoogle());
+    if (from) {
+      navigate(from, { replace: true });
+    } else {
+      navigate('/');
+    }
 
   };
 

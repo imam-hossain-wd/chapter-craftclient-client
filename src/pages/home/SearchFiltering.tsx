@@ -32,7 +32,7 @@ const SearchFiltering = () => {
   };
 
   return (
-    <div className="flex lg:justify-around">
+    <div className="flex flex-col lg:flex-row lg:justify-around ">
       <form onSubmit={handleSubmit(onFilterSubmit)}>
         <select {...register('genre')}>
           <option value="">All Genres</option>
@@ -48,12 +48,13 @@ const SearchFiltering = () => {
           type="number"
           placeholder="Publication Year"
         />
-
-        <button type="submit" className='mr-2 btn btn-sm'>Apply Filters</button>
+     
+        <button type="submit" className='mr-2 btn btn-sm mt-5 lg:mt-0'>Apply Filters</button>
         <button onClick={handleClearFilters} className='btn btn-sm'>Clear Filters</button>
+
       </form>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="mr-10">
+      <form onSubmit={handleSubmit(onSubmit)} className="mt-5 lg:mt-0 mr-10">
         <input
           className="input input-bordered input-sm mt-1 mr-2"
           {...register('searchTerm')}
